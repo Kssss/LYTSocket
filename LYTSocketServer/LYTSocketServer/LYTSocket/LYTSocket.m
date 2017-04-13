@@ -141,27 +141,6 @@
     
 }
 
-/**
- * Called when a socket disconnects with or without error.
- *
- * If you call the disconnect method, and the socket wasn't already disconnected,
- * then an invocation of this delegate method will be enqueued on the delegateQueue
- * before the disconnect method returns.
- *
- * Note: If the LYTGCDAsyncSocket instance is deallocated while it is still connected,
- * and the delegate is not also deallocated, then this method will be invoked,
- * but the sock parameter will be nil. (It must necessarily be nil since it is no longer available.)
- * This is a generally rare, but is possible if one writes code like this:
- *
- * asyncSocket = nil; // I'm implicitly disconnecting the socket
- *
- * In this case it may preferrable to nil the delegate beforehand, like this:
- *
- * asyncSocket.delegate = nil; // Don't invoke my delegate method
- * asyncSocket = nil; // I'm implicitly disconnecting the socket
- *
- * Of course, this depends on how your state machine is configured.
- **/
 - (void)socketDidDisconnect:(LYTGCDAsyncSocket *)sock withError:(nullable NSError *)err{
     NSLog(@"socketDidDisconnect%@",sock);
     [self reconect];
