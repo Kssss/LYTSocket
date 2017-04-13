@@ -1,0 +1,580 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DE0DC5111E9F16150041011E /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0DC50C1E9F16150041011E /* GCDAsyncSocket.m */; };
+		DE0DC5121E9F16150041011E /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0DC50E1E9F16150041011E /* GCDAsyncUdpSocket.m */; };
+		DE0DC5131E9F16150041011E /* LYTSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0DC5101E9F16150041011E /* LYTSocket.m */; };
+		DE597A441E9F14D4008789FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DE597A431E9F14D4008789FA /* main.m */; };
+		DE597A471E9F14D4008789FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DE597A461E9F14D4008789FA /* AppDelegate.m */; };
+		DE597A4A1E9F14D4008789FA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE597A491E9F14D4008789FA /* ViewController.m */; };
+		DE597A4D1E9F14D4008789FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE597A4B1E9F14D4008789FA /* Main.storyboard */; };
+		DE597A4F1E9F14D4008789FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE597A4E1E9F14D4008789FA /* Assets.xcassets */; };
+		DE597A521E9F14D4008789FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE597A501E9F14D4008789FA /* LaunchScreen.storyboard */; };
+		DE597A5D1E9F14D4008789FA /* LYTSocketClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DE597A5C1E9F14D4008789FA /* LYTSocketClientTests.m */; };
+		DE597A681E9F14D4008789FA /* LYTSocketClientUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DE597A671E9F14D4008789FA /* LYTSocketClientUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DE597A591E9F14D4008789FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DE597A371E9F14D4008789FA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DE597A3E1E9F14D4008789FA;
+			remoteInfo = LYTSocketClient;
+		};
+		DE597A641E9F14D4008789FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DE597A371E9F14D4008789FA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DE597A3E1E9F14D4008789FA;
+			remoteInfo = LYTSocketClient;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DE0DC5091E9F16150041011E /* CocoaAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaAsyncSocket.h; sourceTree = "<group>"; };
+		DE0DC50B1E9F16150041011E /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		DE0DC50C1E9F16150041011E /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		DE0DC50D1E9F16150041011E /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		DE0DC50E1E9F16150041011E /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		DE0DC50F1E9F16150041011E /* LYTSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYTSocket.h; sourceTree = "<group>"; };
+		DE0DC5101E9F16150041011E /* LYTSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYTSocket.m; sourceTree = "<group>"; };
+		DE597A3F1E9F14D4008789FA /* LYTSocketClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LYTSocketClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE597A431E9F14D4008789FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DE597A451E9F14D4008789FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DE597A461E9F14D4008789FA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DE597A481E9F14D4008789FA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		DE597A491E9F14D4008789FA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DE597A4C1E9F14D4008789FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DE597A4E1E9F14D4008789FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DE597A511E9F14D4008789FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DE597A531E9F14D4008789FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE597A581E9F14D4008789FA /* LYTSocketClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LYTSocketClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE597A5C1E9F14D4008789FA /* LYTSocketClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYTSocketClientTests.m; sourceTree = "<group>"; };
+		DE597A5E1E9F14D4008789FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE597A631E9F14D4008789FA /* LYTSocketClientUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LYTSocketClientUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE597A671E9F14D4008789FA /* LYTSocketClientUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYTSocketClientUITests.m; sourceTree = "<group>"; };
+		DE597A691E9F14D4008789FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DE597A3C1E9F14D4008789FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE597A551E9F14D4008789FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE597A601E9F14D4008789FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DE0DC5081E9F16150041011E /* LYTSocket */ = {
+			isa = PBXGroup;
+			children = (
+				DE0DC5091E9F16150041011E /* CocoaAsyncSocket.h */,
+				DE0DC50A1E9F16150041011E /* GCD */,
+				DE0DC50F1E9F16150041011E /* LYTSocket.h */,
+				DE0DC5101E9F16150041011E /* LYTSocket.m */,
+			);
+			path = LYTSocket;
+			sourceTree = "<group>";
+		};
+		DE0DC50A1E9F16150041011E /* GCD */ = {
+			isa = PBXGroup;
+			children = (
+				DE0DC50B1E9F16150041011E /* GCDAsyncSocket.h */,
+				DE0DC50C1E9F16150041011E /* GCDAsyncSocket.m */,
+				DE0DC50D1E9F16150041011E /* GCDAsyncUdpSocket.h */,
+				DE0DC50E1E9F16150041011E /* GCDAsyncUdpSocket.m */,
+			);
+			path = GCD;
+			sourceTree = "<group>";
+		};
+		DE597A361E9F14D4008789FA = {
+			isa = PBXGroup;
+			children = (
+				DE597A411E9F14D4008789FA /* LYTSocketClient */,
+				DE597A5B1E9F14D4008789FA /* LYTSocketClientTests */,
+				DE597A661E9F14D4008789FA /* LYTSocketClientUITests */,
+				DE597A401E9F14D4008789FA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DE597A401E9F14D4008789FA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DE597A3F1E9F14D4008789FA /* LYTSocketClient.app */,
+				DE597A581E9F14D4008789FA /* LYTSocketClientTests.xctest */,
+				DE597A631E9F14D4008789FA /* LYTSocketClientUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DE597A411E9F14D4008789FA /* LYTSocketClient */ = {
+			isa = PBXGroup;
+			children = (
+				DE0DC5081E9F16150041011E /* LYTSocket */,
+				DE597A451E9F14D4008789FA /* AppDelegate.h */,
+				DE597A461E9F14D4008789FA /* AppDelegate.m */,
+				DE597A481E9F14D4008789FA /* ViewController.h */,
+				DE597A491E9F14D4008789FA /* ViewController.m */,
+				DE597A4B1E9F14D4008789FA /* Main.storyboard */,
+				DE597A4E1E9F14D4008789FA /* Assets.xcassets */,
+				DE597A501E9F14D4008789FA /* LaunchScreen.storyboard */,
+				DE597A531E9F14D4008789FA /* Info.plist */,
+				DE597A421E9F14D4008789FA /* Supporting Files */,
+			);
+			path = LYTSocketClient;
+			sourceTree = "<group>";
+		};
+		DE597A421E9F14D4008789FA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DE597A431E9F14D4008789FA /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DE597A5B1E9F14D4008789FA /* LYTSocketClientTests */ = {
+			isa = PBXGroup;
+			children = (
+				DE597A5C1E9F14D4008789FA /* LYTSocketClientTests.m */,
+				DE597A5E1E9F14D4008789FA /* Info.plist */,
+			);
+			path = LYTSocketClientTests;
+			sourceTree = "<group>";
+		};
+		DE597A661E9F14D4008789FA /* LYTSocketClientUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DE597A671E9F14D4008789FA /* LYTSocketClientUITests.m */,
+				DE597A691E9F14D4008789FA /* Info.plist */,
+			);
+			path = LYTSocketClientUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DE597A3E1E9F14D4008789FA /* LYTSocketClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DE597A6C1E9F14D4008789FA /* Build configuration list for PBXNativeTarget "LYTSocketClient" */;
+			buildPhases = (
+				DE597A3B1E9F14D4008789FA /* Sources */,
+				DE597A3C1E9F14D4008789FA /* Frameworks */,
+				DE597A3D1E9F14D4008789FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LYTSocketClient;
+			productName = LYTSocketClient;
+			productReference = DE597A3F1E9F14D4008789FA /* LYTSocketClient.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DE597A571E9F14D4008789FA /* LYTSocketClientTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DE597A6F1E9F14D4008789FA /* Build configuration list for PBXNativeTarget "LYTSocketClientTests" */;
+			buildPhases = (
+				DE597A541E9F14D4008789FA /* Sources */,
+				DE597A551E9F14D4008789FA /* Frameworks */,
+				DE597A561E9F14D4008789FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DE597A5A1E9F14D4008789FA /* PBXTargetDependency */,
+			);
+			name = LYTSocketClientTests;
+			productName = LYTSocketClientTests;
+			productReference = DE597A581E9F14D4008789FA /* LYTSocketClientTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DE597A621E9F14D4008789FA /* LYTSocketClientUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DE597A721E9F14D4008789FA /* Build configuration list for PBXNativeTarget "LYTSocketClientUITests" */;
+			buildPhases = (
+				DE597A5F1E9F14D4008789FA /* Sources */,
+				DE597A601E9F14D4008789FA /* Frameworks */,
+				DE597A611E9F14D4008789FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DE597A651E9F14D4008789FA /* PBXTargetDependency */,
+			);
+			name = LYTSocketClientUITests;
+			productName = LYTSocketClientUITests;
+			productReference = DE597A631E9F14D4008789FA /* LYTSocketClientUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DE597A371E9F14D4008789FA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "谭建中";
+				TargetAttributes = {
+					DE597A3E1E9F14D4008789FA = {
+						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = QDH66RGJXX;
+						ProvisioningStyle = Automatic;
+					};
+					DE597A571E9F14D4008789FA = {
+						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = QDH66RGJXX;
+						ProvisioningStyle = Automatic;
+						TestTargetID = DE597A3E1E9F14D4008789FA;
+					};
+					DE597A621E9F14D4008789FA = {
+						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = QDH66RGJXX;
+						ProvisioningStyle = Automatic;
+						TestTargetID = DE597A3E1E9F14D4008789FA;
+					};
+				};
+			};
+			buildConfigurationList = DE597A3A1E9F14D4008789FA /* Build configuration list for PBXProject "LYTSocketClient" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DE597A361E9F14D4008789FA;
+			productRefGroup = DE597A401E9F14D4008789FA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DE597A3E1E9F14D4008789FA /* LYTSocketClient */,
+				DE597A571E9F14D4008789FA /* LYTSocketClientTests */,
+				DE597A621E9F14D4008789FA /* LYTSocketClientUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DE597A3D1E9F14D4008789FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE597A521E9F14D4008789FA /* LaunchScreen.storyboard in Resources */,
+				DE597A4F1E9F14D4008789FA /* Assets.xcassets in Resources */,
+				DE597A4D1E9F14D4008789FA /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE597A561E9F14D4008789FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE597A611E9F14D4008789FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DE597A3B1E9F14D4008789FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE0DC5111E9F16150041011E /* GCDAsyncSocket.m in Sources */,
+				DE0DC5121E9F16150041011E /* GCDAsyncUdpSocket.m in Sources */,
+				DE597A4A1E9F14D4008789FA /* ViewController.m in Sources */,
+				DE597A471E9F14D4008789FA /* AppDelegate.m in Sources */,
+				DE0DC5131E9F16150041011E /* LYTSocket.m in Sources */,
+				DE597A441E9F14D4008789FA /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE597A541E9F14D4008789FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE597A5D1E9F14D4008789FA /* LYTSocketClientTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE597A5F1E9F14D4008789FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE597A681E9F14D4008789FA /* LYTSocketClientUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DE597A5A1E9F14D4008789FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DE597A3E1E9F14D4008789FA /* LYTSocketClient */;
+			targetProxy = DE597A591E9F14D4008789FA /* PBXContainerItemProxy */;
+		};
+		DE597A651E9F14D4008789FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DE597A3E1E9F14D4008789FA /* LYTSocketClient */;
+			targetProxy = DE597A641E9F14D4008789FA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DE597A4B1E9F14D4008789FA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DE597A4C1E9F14D4008789FA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DE597A501E9F14D4008789FA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DE597A511E9F14D4008789FA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DE597A6A1E9F14D4008789FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DE597A6B1E9F14D4008789FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DE597A6D1E9F14D4008789FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = QDH66RGJXX;
+				INFOPLIST_FILE = LYTSocketClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = CFSocketContext.LYTSocketClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DE597A6E1E9F14D4008789FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = QDH66RGJXX;
+				INFOPLIST_FILE = LYTSocketClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = CFSocketContext.LYTSocketClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		DE597A701E9F14D4008789FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = QDH66RGJXX;
+				INFOPLIST_FILE = LYTSocketClientTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = CFSocketContext.LYTSocketClientTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LYTSocketClient.app/LYTSocketClient";
+			};
+			name = Debug;
+		};
+		DE597A711E9F14D4008789FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = QDH66RGJXX;
+				INFOPLIST_FILE = LYTSocketClientTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = CFSocketContext.LYTSocketClientTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LYTSocketClient.app/LYTSocketClient";
+			};
+			name = Release;
+		};
+		DE597A731E9F14D4008789FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = QDH66RGJXX;
+				INFOPLIST_FILE = LYTSocketClientUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = CFSocketContext.LYTSocketClientUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = LYTSocketClient;
+			};
+			name = Debug;
+		};
+		DE597A741E9F14D4008789FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = QDH66RGJXX;
+				INFOPLIST_FILE = LYTSocketClientUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = CFSocketContext.LYTSocketClientUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = LYTSocketClient;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DE597A3A1E9F14D4008789FA /* Build configuration list for PBXProject "LYTSocketClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE597A6A1E9F14D4008789FA /* Debug */,
+				DE597A6B1E9F14D4008789FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE597A6C1E9F14D4008789FA /* Build configuration list for PBXNativeTarget "LYTSocketClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE597A6D1E9F14D4008789FA /* Debug */,
+				DE597A6E1E9F14D4008789FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE597A6F1E9F14D4008789FA /* Build configuration list for PBXNativeTarget "LYTSocketClientTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE597A701E9F14D4008789FA /* Debug */,
+				DE597A711E9F14D4008789FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE597A721E9F14D4008789FA /* Build configuration list for PBXNativeTarget "LYTSocketClientUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE597A731E9F14D4008789FA /* Debug */,
+				DE597A741E9F14D4008789FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DE597A371E9F14D4008789FA /* Project object */;
+}
