@@ -39,9 +39,11 @@
 }
 - (void)startConnectSocket:(uint16_t)port host:(NSString *)host {
     NSError *error = nil;
-   bool result =  [_asyncSocket connectToHost:self.socketHost onPort:self.port error:&error];
+    _socketHost = host;
+    _port = port;
 
-    if (!error && result) {
+   bool result =  [_asyncSocket connectToHost:self.socketHost onPort:self.port error:&error];
+        if (!error && result) {
         NSLog(@"连接服务开启成功");
     } else {
         NSLog(@"连接服务开启失败 %@", error);
@@ -87,24 +89,6 @@
 //    
 //}
 
-/**
- * Called when a socket accepts a connection.
- * Another socket is automatically spawned to handle it.
- *
- * You must retain the newSocket if you wish to handle the connection.
- * Otherwise the newSocket instance will be released and the spawned connection will be closed.
- *
- * By default the new socket will have the same delegate and delegateQueue.
- * You may, of course, change this at any time.
- **/
-- (void)socket:(LYTGCDAsyncSocket *)sock didAcceptNewSocket:(LYTGCDAsyncSocket *)newSocket{
-    NSLog(@"服务端  %@", sock);
-    NSLog(@"客户端  %@", newSocket);
-    [self.clientSockets addObject:newSocket];
-    
-    //监听客户端是否写入消息
-    [newSocket readDataWithTimeout:-1 tag:0];
-}
 
 /**
  * Called when a socket connects and is ready for reading and writing.
@@ -122,13 +106,6 @@
     [sock readDataWithTimeout:-1 tag:0];
 }
 
-/**
- * Called when a socket connects and is ready for reading and writing.
- * The host parameter will be an IP address, not a DNS name.
- **/
-- (void)socket:(LYTGCDAsyncSocket *)sock didConnectToUrl:(NSURL *)url{
-    
-}
 
 /**
  * Called when a socket has completed reading the requested data into memory.
@@ -138,26 +115,20 @@
     NSLog(@"客户端  %@", sock);
     NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"data --- %@", dataStr);
-//    [self.]
-//    [sock writeData:data withTimeout:-1 tag:0];
-//    [sock readDataWithTimeout:-1 tag:0];
+
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
+        [sock writeData:data withTimeout:-1 tag:0];
+    });
+
+    [sock readDataWithTimeout:-1 tag:0];
     
 }
-
-/**
- * Called when a socket has read in data, but has not yet completed the read.
- * This would occur if using readToData: or readToLength: methods.
- * It may be used to for things such as updating progress bars.
- **/
-- (void)socket:(LYTGCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag{
-    
-}
-
 /**
  * Called when a socket has completed writing the requested data. Not called if there is an error.
  **/
 - (void)socket:(LYTGCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
-    NSLog(@"didWriteDataWithTag - %@",sock);
+    NSLog(@"写入到socket 给服务器 - %@",sock);
 }
 
 /**
@@ -234,41 +205,10 @@
  * Of course, this depends on how your state machine is configured.
  **/
 - (void)socketDidDisconnect:(LYTGCDAsyncSocket *)sock withError:(nullable NSError *)err{
-    NSLog(@"socketDidDisconnect%@",sock);
+    NSLog(@"客户端断开了socket%@",sock);
+    //重新连接
     [self reconect];
 }
 
-/**
- * Called after the socket has successfully completed SSL/TLS negotiation.
- * This method is not called unless you use the provided startTLS method.
- *
- * If a SSL/TLS negotiation fails (invalid certificate, etc) then the socket will immediately close,
- * and the socketDidDisconnect:withError: delegate method will be called with the specific SSL error code.
- **/
-- (void)socketDidSecure:(LYTGCDAsyncSocket *)sock{
-    
-}
-
-/**
- * Allows a socket delegate to hook into the TLS handshake and manually validate the peer it's connecting to.
- *
- * This is only called if startTLS is invoked with options that include:
- * - LYTGCDAsyncSocketManuallyEvaluateTrust == YES
- *
- * Typically the delegate will use SecTrustEvaluate (and related functions) to properly validate the peer.
- *
- * Note from Apple's documentation:
- *   Because [SecTrustEvaluate] might look on the network for certificates in the certificate chain,
- *   [it] might block while attempting network access. You should never call it from your main thread;
- *   call it only from within a function running on a dispatch queue or on a separate thread.
- *
- * Thus this method uses a completionHandler block rather than a normal return value.
- * The completionHandler block is thread-safe, and may be invoked from a background queue/thread.
- * It is safe to invoke the completionHandler block even if the socket has been closed.
- **/
-- (void)socket:(LYTGCDAsyncSocket *)sock didReceiveTrust:(SecTrustRef)trust
-completionHandler:(void (^)(BOOL shouldTrustPeer))completionHandler{
-    
-}
 
 @end

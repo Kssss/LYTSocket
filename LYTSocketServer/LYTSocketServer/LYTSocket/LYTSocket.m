@@ -39,6 +39,8 @@
 }
 - (void)startConnectSocket:(uint16_t)port host:(NSString *)host {
     NSError *error = nil;
+    _socketHost = host;
+    _port = port;
    bool result =  [_asyncSocket connectToHost:self.socketHost onPort:self.port error:&error];
 
     if (!error && result) {
@@ -102,31 +104,15 @@
     NSLog(@"客户端  %@", newSocket);
     [self.clientSockets addObject:newSocket];
     
-    //监听客户端是否写入消息
+    //监听客户端 写入消息
     [newSocket readDataWithTimeout:-1 tag:0];
-}
-
-/**
- * Called when a socket connects and is ready for reading and writing.
- * The host parameter will be an IP address, not a DNS name.
- **/
-- (void)socket:(LYTGCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port{
-    NSLog(@"客户端的socket %@",self.asyncSocket);
-    NSLog(@"返回的socket--%@--连接上了%@-端口%zd",sock,host,port);
+    
+    //写入欢迎语
+    NSData *data = [@"欢迎来到 LYTSocketServer！！！！\n" dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [newSocket writeData:data withTimeout:-1 tag:0];
     
     
-    NSData *data = [@"你好，我是访客\n" dataUsingEncoding:NSUTF8StringEncoding];
-    
-    [sock writeData:data withTimeout:-1 tag:0];
-    
-    [sock readDataWithTimeout:-1 tag:0];
-}
-
-/**
- * Called when a socket connects and is ready for reading and writing.
- * The host parameter will be an IP address, not a DNS name.
- **/
-- (void)socket:(LYTGCDAsyncSocket *)sock didConnectToUrl:(NSURL *)url{
     
 }
 
@@ -138,19 +124,11 @@
     NSLog(@"客户端  %@", sock);
     NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"data --- %@", dataStr);
-//    [self.]
-//    [sock writeData:data withTimeout:-1 tag:0];
-//    [sock readDataWithTimeout:-1 tag:0];
+    [sock readDataWithTimeout:-1 tag:0];
     
-}
-
-/**
- * Called when a socket has read in data, but has not yet completed the read.
- * This would occur if using readToData: or readToLength: methods.
- * It may be used to for things such as updating progress bars.
- **/
-- (void)socket:(LYTGCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag{
-    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
+        [sock writeData:data withTimeout:-1 tag:0];
+    });
 }
 
 /**
@@ -159,55 +137,6 @@
 - (void)socket:(LYTGCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
     NSLog(@"didWriteDataWithTag - %@",sock);
 }
-
-/**
- * Called when a socket has written some data, but has not yet completed the entire write.
- * It may be used to for things such as updating progress bars.
- **/
-- (void)socket:(LYTGCDAsyncSocket *)sock didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag{
-    
-}
-
-/**
- * Called if a read operation has reached its timeout without completing.
- * This method allows you to optionally extend the timeout.
- * If you return a positive time interval (> 0) the read's timeout will be extended by the given amount.
- * If you don't implement this method, or return a non-positive time interval (<= 0) the read will timeout as usual.
- *
- * The elapsed parameter is the sum of the original timeout, plus any additions previously added via this method.
- * The length parameter is the number of bytes that have been read so far for the read operation.
- *
- * Note that this method may be called multiple times for a single read if you return positive numbers.
- **/
-//- (NSTimeInterval)socket:(LYTGCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
-//                 elapsed:(NSTimeInterval)elapsed
-//               bytesDone:(NSUInteger)length{
-//    
-//}
-
-/**
- * Called if a write operation has reached its timeout without completing.
- * This method allows you to optionally extend the timeout.
- * If you return a positive time interval (> 0) the write's timeout will be extended by the given amount.
- * If you don't implement this method, or return a non-positive time interval (<= 0) the write will timeout as usual.
- *
- * The elapsed parameter is the sum of the original timeout, plus any additions previously added via this method.
- * The length parameter is the number of bytes that have been written so far for the write operation.
- *
- * Note that this method may be called multiple times for a single write if you return positive numbers.
- **/
-//- (NSTimeInterval)socket:(LYTGCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
-//                 elapsed:(NSTimeInterval)elapsed
-//               bytesDone:(NSUInteger)length{
-//    
-//}
-
-/**
- * Conditionally called if the read stream closes, but the write stream may still be writeable.
- *
- * This delegate method is only called if autoDisconnectOnClosedReadStream has been set to NO.
- * See the discussion on the autoDisconnectOnClosedReadStream method for more information.
- **/
 - (void)socketDidCloseReadStream:(LYTGCDAsyncSocket *)sock{
     
 }
