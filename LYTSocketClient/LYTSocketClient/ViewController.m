@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "LYTSocket.h"
 
 @interface ViewController ()
 
@@ -16,7 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    LYTSocket *sock = [LYTSocket sharedSocket];
+    [sock startConnectSocket:5528 host:@"192.168.36.21"];
 }
 
 
