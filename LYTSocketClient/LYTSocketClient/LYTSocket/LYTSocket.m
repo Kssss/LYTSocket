@@ -7,10 +7,10 @@
 //
 
 #import "LYTSocket.h"
-#import "GCDAsyncSocket.h"
-@interface LYTSocket ()<GCDAsyncSocketDelegate>
+#import "LYTGCDAsyncSocket.h"
+@interface LYTSocket ()<LYTGCDAsyncSocketDelegate>
 
-@property (nonatomic, strong) GCDAsyncSocket *asyncSocket;
+@property (nonatomic, strong) LYTGCDAsyncSocket *asyncSocket;
 @property (nonatomic, strong) NSMutableArray *clientSockets;// 客户端socket
 
 
@@ -27,7 +27,7 @@
 }
 - (instancetype)init {
     if (self = [super init]) {
-        _asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+        _asyncSocket = [[LYTGCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
     }
     return self;
 }
@@ -37,27 +37,34 @@
     }
     return _clientSockets;
 }
-- (void)startConnectSocket {
+- (void)startConnectSocket:(uint16_t)port host:(NSString *)host {
     NSError *error = nil;
    bool result =  [_asyncSocket connectToHost:self.socketHost onPort:self.port error:&error];
-    
-    
-    
-//    [_asyncSocket acceptOnPort:self.port error:&error];
-    
-    if (!error) {
-        NSLog(@"连接服务器开启成功");
+
+    if (!error && result) {
+        NSLog(@"连接服务开启成功");
     } else {
         NSLog(@"连接服务开启失败 %@", error);
     }
 }
-- (void)reconect{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-       [self startConnectSocket];
-    });
+- (void)startAcceptOnPort:(uint16_t) prot{
+    NSError *error = nil;
+    self.port = prot;
+    BOOL result =  [_asyncSocket acceptOnPort:self.port error:&error];
     
+    if (!error && result) {
+        NSLog(@"服务器服务开启成功");
+    } else {
+        NSLog(@"服务器服务开启失败 %@", error);
+    }
+
 }
-#pragma mark - GCDAsyncSocketDelegate
+- (void)reconect{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
+       [self startConnectSocket:self.port host:self.socketHost];
+    });
+}
+#pragma mark - LYTGCDAsyncSocketDelegate
 /**
  * This method is called immediately prior to socket:didAcceptNewSocket:.
  * It optionally allows a listening socket to specify the socketQueue for a new accepted socket.
@@ -76,7 +83,7 @@
  * dispatch_retain(myExistingQueue);
  * return myExistingQueue;
  **/
-//- (nullable dispatch_queue_t)newSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(GCDAsyncSocket *)sock{
+//- (nullable dispatch_queue_t)newSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(LYTGCDAsyncSocket *)sock{
 //    
 //}
 
@@ -90,7 +97,7 @@
  * By default the new socket will have the same delegate and delegateQueue.
  * You may, of course, change this at any time.
  **/
-- (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket{
+- (void)socket:(LYTGCDAsyncSocket *)sock didAcceptNewSocket:(LYTGCDAsyncSocket *)newSocket{
     NSLog(@"服务端  %@", sock);
     NSLog(@"客户端  %@", newSocket);
     [self.clientSockets addObject:newSocket];
@@ -103,7 +110,7 @@
  * Called when a socket connects and is ready for reading and writing.
  * The host parameter will be an IP address, not a DNS name.
  **/
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port{
+- (void)socket:(LYTGCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port{
     NSLog(@"客户端的socket %@",self.asyncSocket);
     NSLog(@"返回的socket--%@--连接上了%@-端口%zd",sock,host,port);
     
@@ -119,7 +126,7 @@
  * Called when a socket connects and is ready for reading and writing.
  * The host parameter will be an IP address, not a DNS name.
  **/
-- (void)socket:(GCDAsyncSocket *)sock didConnectToUrl:(NSURL *)url{
+- (void)socket:(LYTGCDAsyncSocket *)sock didConnectToUrl:(NSURL *)url{
     
 }
 
@@ -127,7 +134,7 @@
  * Called when a socket has completed reading the requested data into memory.
  * Not called if there is an error.
  **/
-- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag{
+- (void)socket:(LYTGCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag{
     NSLog(@"客户端  %@", sock);
     NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"data --- %@", dataStr);
@@ -142,14 +149,14 @@
  * This would occur if using readToData: or readToLength: methods.
  * It may be used to for things such as updating progress bars.
  **/
-- (void)socket:(GCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag{
+- (void)socket:(LYTGCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag{
     
 }
 
 /**
  * Called when a socket has completed writing the requested data. Not called if there is an error.
  **/
-- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
+- (void)socket:(LYTGCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
     NSLog(@"didWriteDataWithTag - %@",sock);
 }
 
@@ -157,7 +164,7 @@
  * Called when a socket has written some data, but has not yet completed the entire write.
  * It may be used to for things such as updating progress bars.
  **/
-- (void)socket:(GCDAsyncSocket *)sock didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag{
+- (void)socket:(LYTGCDAsyncSocket *)sock didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag{
     
 }
 
@@ -172,7 +179,7 @@
  *
  * Note that this method may be called multiple times for a single read if you return positive numbers.
  **/
-//- (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
+//- (NSTimeInterval)socket:(LYTGCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
 //                 elapsed:(NSTimeInterval)elapsed
 //               bytesDone:(NSUInteger)length{
 //    
@@ -189,7 +196,7 @@
  *
  * Note that this method may be called multiple times for a single write if you return positive numbers.
  **/
-//- (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
+//- (NSTimeInterval)socket:(LYTGCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
 //                 elapsed:(NSTimeInterval)elapsed
 //               bytesDone:(NSUInteger)length{
 //    
@@ -201,7 +208,7 @@
  * This delegate method is only called if autoDisconnectOnClosedReadStream has been set to NO.
  * See the discussion on the autoDisconnectOnClosedReadStream method for more information.
  **/
-- (void)socketDidCloseReadStream:(GCDAsyncSocket *)sock{
+- (void)socketDidCloseReadStream:(LYTGCDAsyncSocket *)sock{
     
 }
 
@@ -212,7 +219,7 @@
  * then an invocation of this delegate method will be enqueued on the delegateQueue
  * before the disconnect method returns.
  *
- * Note: If the GCDAsyncSocket instance is deallocated while it is still connected,
+ * Note: If the LYTGCDAsyncSocket instance is deallocated while it is still connected,
  * and the delegate is not also deallocated, then this method will be invoked,
  * but the sock parameter will be nil. (It must necessarily be nil since it is no longer available.)
  * This is a generally rare, but is possible if one writes code like this:
@@ -226,7 +233,7 @@
  *
  * Of course, this depends on how your state machine is configured.
  **/
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(nullable NSError *)err{
+- (void)socketDidDisconnect:(LYTGCDAsyncSocket *)sock withError:(nullable NSError *)err{
     NSLog(@"socketDidDisconnect%@",sock);
     [self reconect];
 }
@@ -238,7 +245,7 @@
  * If a SSL/TLS negotiation fails (invalid certificate, etc) then the socket will immediately close,
  * and the socketDidDisconnect:withError: delegate method will be called with the specific SSL error code.
  **/
-- (void)socketDidSecure:(GCDAsyncSocket *)sock{
+- (void)socketDidSecure:(LYTGCDAsyncSocket *)sock{
     
 }
 
@@ -246,7 +253,7 @@
  * Allows a socket delegate to hook into the TLS handshake and manually validate the peer it's connecting to.
  *
  * This is only called if startTLS is invoked with options that include:
- * - GCDAsyncSocketManuallyEvaluateTrust == YES
+ * - LYTGCDAsyncSocketManuallyEvaluateTrust == YES
  *
  * Typically the delegate will use SecTrustEvaluate (and related functions) to properly validate the peer.
  *
@@ -259,7 +266,7 @@
  * The completionHandler block is thread-safe, and may be invoked from a background queue/thread.
  * It is safe to invoke the completionHandler block even if the socket has been closed.
  **/
-- (void)socket:(GCDAsyncSocket *)sock didReceiveTrust:(SecTrustRef)trust
+- (void)socket:(LYTGCDAsyncSocket *)sock didReceiveTrust:(SecTrustRef)trust
 completionHandler:(void (^)(BOOL shouldTrustPeer))completionHandler{
     
 }
