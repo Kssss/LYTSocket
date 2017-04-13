@@ -9,14 +9,16 @@
 #import "LYTSocket.h"
 @interface ViewController ()
 
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    LYTSocket *sock = [LYTSocket sharedSocket];
+    [sock startAcceptOnPort:5528];
     
-
 }
 
 

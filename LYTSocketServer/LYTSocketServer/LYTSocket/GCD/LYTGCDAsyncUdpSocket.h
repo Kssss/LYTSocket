@@ -1,5 +1,5 @@
 //  
-//  GCDAsyncUdpSocket
+//  LYTGCDAsyncUdpSocket
 //  
 //  This class is in the public domain.
 //  Originally created by Robbie Hanson of Deusty LLC.
@@ -14,28 +14,28 @@
 #import <Availability.h>
 
 NS_ASSUME_NONNULL_BEGIN
-extern NSString *const GCDAsyncUdpSocketException;
-extern NSString *const GCDAsyncUdpSocketErrorDomain;
+extern NSString *const LYTGCDAsyncUdpSocketException;
+extern NSString *const LYTGCDAsyncUdpSocketErrorDomain;
 
-extern NSString *const GCDAsyncUdpSocketQueueName;
-extern NSString *const GCDAsyncUdpSocketThreadName;
+extern NSString *const LYTGCDAsyncUdpSocketQueueName;
+extern NSString *const LYTGCDAsyncUdpSocketThreadName;
 
-typedef NS_ENUM(NSInteger, GCDAsyncUdpSocketError) {
-	GCDAsyncUdpSocketNoError = 0,          // Never used
-	GCDAsyncUdpSocketBadConfigError,       // Invalid configuration
-	GCDAsyncUdpSocketBadParamError,        // Invalid parameter was passed
-	GCDAsyncUdpSocketSendTimeoutError,     // A send operation timed out
-	GCDAsyncUdpSocketClosedError,          // The socket was closed
-	GCDAsyncUdpSocketOtherError,           // Description provided in userInfo
+typedef NS_ENUM(NSInteger, LYTGCDAsyncUdpSocketError) {
+	LYTGCDAsyncUdpSocketNoError = 0,          // Never used
+	LYTGCDAsyncUdpSocketBadConfigError,       // Invalid configuration
+	LYTGCDAsyncUdpSocketBadParamError,        // Invalid parameter was passed
+	LYTGCDAsyncUdpSocketSendTimeoutError,     // A send operation timed out
+	LYTGCDAsyncUdpSocketClosedError,          // The socket was closed
+	LYTGCDAsyncUdpSocketOtherError,           // Description provided in userInfo
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@class GCDAsyncUdpSocket;
+@class LYTGCDAsyncUdpSocket;
 
-@protocol GCDAsyncUdpSocketDelegate <NSObject>
+@protocol LYTGCDAsyncUdpSocketDelegate <NSObject>
 @optional
 
 /**
@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, GCDAsyncUdpSocketError) {
  * 
  * This method is called if one of the connect methods are invoked, and the connection is successful.
 **/
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didConnectToAddress:(NSData *)address;
+- (void)udpSocket:(LYTGCDAsyncUdpSocket *)sock didConnectToAddress:(NSData *)address;
 
 /**
  * By design, UDP is a connectionless protocol, and connecting is not needed.
@@ -55,30 +55,30 @@ typedef NS_ENUM(NSInteger, GCDAsyncUdpSocketError) {
  * This method is called if one of the connect methods are invoked, and the connection fails.
  * This may happen, for example, if a domain name is given for the host and the domain name is unable to be resolved.
 **/
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotConnect:(NSError * _Nullable)error;
+- (void)udpSocket:(LYTGCDAsyncUdpSocket *)sock didNotConnect:(NSError * _Nullable)error;
 
 /**
  * Called when the datagram with the given tag has been sent.
 **/
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didSendDataWithTag:(long)tag;
+- (void)udpSocket:(LYTGCDAsyncUdpSocket *)sock didSendDataWithTag:(long)tag;
 
 /**
  * Called if an error occurs while trying to send a datagram.
  * This could be due to a timeout, or something more serious such as the data being too large to fit in a sigle packet.
 **/
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError * _Nullable)error;
+- (void)udpSocket:(LYTGCDAsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError * _Nullable)error;
 
 /**
  * Called when the socket has received the requested datagram.
 **/
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data
+- (void)udpSocket:(LYTGCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data
                                              fromAddress:(NSData *)address
                                        withFilterContext:(nullable id)filterContext;
 
 /**
  * Called when the socket is closed.
 **/
-- (void)udpSocketDidClose:(GCDAsyncUdpSocket *)sock withError:(NSError  * _Nullable)error;
+- (void)udpSocketDidClose:(LYTGCDAsyncUdpSocket *)sock withError:(NSError  * _Nullable)error;
 
 @end
 
@@ -120,7 +120,7 @@ typedef NS_ENUM(NSInteger, GCDAsyncUdpSocketError) {
  * 
  * Example:
  * 
- * GCDAsyncUdpSocketReceiveFilterBlock filter = ^BOOL (NSData *data, NSData *address, id *context) {
+ * LYTGCDAsyncUdpSocketReceiveFilterBlock filter = ^BOOL (NSData *data, NSData *address, id *context) {
  * 
  *     MyProtocolMessage *msg = [MyProtocol parseMessage:data];
  *     
@@ -130,7 +130,7 @@ typedef NS_ENUM(NSInteger, GCDAsyncUdpSocketError) {
  * [udpSocket setReceiveFilter:filter withQueue:myParsingQueue];
  * 
 **/
-typedef BOOL (^GCDAsyncUdpSocketReceiveFilterBlock)(NSData *data, NSData *address, id __nullable * __nonnull context);
+typedef BOOL (^LYTGCDAsyncUdpSocketReceiveFilterBlock)(NSData *data, NSData *address, id __nullable * __nonnull context);
 
 /**
  * You may optionally set a send filter for the socket.
@@ -158,13 +158,13 @@ typedef BOOL (^GCDAsyncUdpSocketReceiveFilterBlock)(NSData *data, NSData *addres
  * Regardless of the return value, the delegate will be informed that the packet was successfully sent.
  *
 **/
-typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, long tag);
+typedef BOOL (^LYTGCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, long tag);
 
 
-@interface GCDAsyncUdpSocket : NSObject
+@interface LYTGCDAsyncUdpSocket : NSObject
 
 /**
- * GCDAsyncUdpSocket uses the standard delegate paradigm,
+ * LYTGCDAsyncUdpSocket uses the standard delegate paradigm,
  * but executes all delegate callbacks on a given delegate dispatch queue.
  * This allows for maximum concurrency, while at the same time providing easy thread safety.
  * 
@@ -172,7 +172,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * use the socket, or you will get an error.
  * 
  * The socket queue is optional.
- * If you pass NULL, GCDAsyncSocket will automatically create its own socket queue.
+ * If you pass NULL, LYTGCDAsyncSocket will automatically create its own socket queue.
  * If you choose to provide a socket queue, the socket queue must not be a concurrent queue,
  * then please see the discussion for the method markSocketQueueTargetQueue.
  *
@@ -180,33 +180,33 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
 **/
 - (instancetype)init;
 - (instancetype)initWithSocketQueue:(nullable dispatch_queue_t)sq;
-- (instancetype)initWithDelegate:(nullable id <GCDAsyncUdpSocketDelegate>)aDelegate delegateQueue:(nullable dispatch_queue_t)dq;
-- (instancetype)initWithDelegate:(nullable id <GCDAsyncUdpSocketDelegate>)aDelegate delegateQueue:(nullable dispatch_queue_t)dq socketQueue:(nullable dispatch_queue_t)sq;
+- (instancetype)initWithDelegate:(nullable id <LYTGCDAsyncUdpSocketDelegate>)aDelegate delegateQueue:(nullable dispatch_queue_t)dq;
+- (instancetype)initWithDelegate:(nullable id <LYTGCDAsyncUdpSocketDelegate>)aDelegate delegateQueue:(nullable dispatch_queue_t)dq socketQueue:(nullable dispatch_queue_t)sq;
 
 #pragma mark Configuration
 
-- (nullable id <GCDAsyncUdpSocketDelegate>)delegate;
-- (void)setDelegate:(nullable id <GCDAsyncUdpSocketDelegate>)delegate;
-- (void)synchronouslySetDelegate:(nullable id <GCDAsyncUdpSocketDelegate>)delegate;
+- (nullable id <LYTGCDAsyncUdpSocketDelegate>)delegate;
+- (void)setDelegate:(nullable id <LYTGCDAsyncUdpSocketDelegate>)delegate;
+- (void)synchronouslySetDelegate:(nullable id <LYTGCDAsyncUdpSocketDelegate>)delegate;
 
 - (nullable dispatch_queue_t)delegateQueue;
 - (void)setDelegateQueue:(nullable dispatch_queue_t)delegateQueue;
 - (void)synchronouslySetDelegateQueue:(nullable dispatch_queue_t)delegateQueue;
 
-- (void)getDelegate:(id <GCDAsyncUdpSocketDelegate> __nullable * __nullable)delegatePtr delegateQueue:(dispatch_queue_t __nullable * __nullable)delegateQueuePtr;
-- (void)setDelegate:(nullable id <GCDAsyncUdpSocketDelegate>)delegate delegateQueue:(nullable dispatch_queue_t)delegateQueue;
-- (void)synchronouslySetDelegate:(nullable id <GCDAsyncUdpSocketDelegate>)delegate delegateQueue:(nullable dispatch_queue_t)delegateQueue;
+- (void)getDelegate:(id <LYTGCDAsyncUdpSocketDelegate> __nullable * __nullable)delegatePtr delegateQueue:(dispatch_queue_t __nullable * __nullable)delegateQueuePtr;
+- (void)setDelegate:(nullable id <LYTGCDAsyncUdpSocketDelegate>)delegate delegateQueue:(nullable dispatch_queue_t)delegateQueue;
+- (void)synchronouslySetDelegate:(nullable id <LYTGCDAsyncUdpSocketDelegate>)delegate delegateQueue:(nullable dispatch_queue_t)delegateQueue;
 
 /**
  * By default, both IPv4 and IPv6 are enabled.
  * 
- * This means GCDAsyncUdpSocket automatically supports both protocols,
+ * This means LYTGCDAsyncUdpSocket automatically supports both protocols,
  * and can send to IPv4 or IPv6 addresses,
  * as well as receive over IPv4 and IPv6.
  * 
- * For operations that require DNS resolution, GCDAsyncUdpSocket supports both IPv4 and IPv6.
- * If a DNS lookup returns only IPv4 results, GCDAsyncUdpSocket will automatically use IPv4.
- * If a DNS lookup returns only IPv6 results, GCDAsyncUdpSocket will automatically use IPv6.
+ * For operations that require DNS resolution, LYTGCDAsyncUdpSocket supports both IPv4 and IPv6.
+ * If a DNS lookup returns only IPv4 results, LYTGCDAsyncUdpSocket will automatically use IPv4.
+ * If a DNS lookup returns only IPv6 results, LYTGCDAsyncUdpSocket will automatically use IPv6.
  * If a DNS lookup returns both IPv4 and IPv6 results, then the protocol used depends on the configured preference.
  * If IPv4 is preferred, then IPv4 is used.
  * If IPv6 is preferred, then IPv6 is used.
@@ -236,7 +236,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * The theoretical maximum size of any IPv4 UDP packet is UINT16_MAX = 65535.
  * The theoretical maximum size of any IPv6 UDP packet is UINT32_MAX = 4294967295.
  * 
- * Since the OS/GCD notifies us of the size of each received UDP packet,
+ * Since the OS/LYTGCD notifies us of the size of each received UDP packet,
  * the actual allocated buffer size for each packet is exact.
  * And in practice the size of UDP packets is generally much smaller than the max.
  * Indeed most protocols will send and receive packets of only a few bytes,
@@ -547,7 +547,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * the socket is sending it. In other words, it's not safe to alter the data until after the delegate method
  * udpSocket:didSendDataWithTag: or udpSocket:didNotSendDataWithTag:dueToError: is invoked signifying
  * that this particular send operation has completed.
- * This is due to the fact that GCDAsyncUdpSocket does NOT copy the data.
+ * This is due to the fact that LYTGCDAsyncUdpSocket does NOT copy the data.
  * It simply retains it for performance reasons.
  * Often times, if NSMutableData is passed, it is because a request/response was built up in memory.
  * Copying this data adds an unwanted/unneeded overhead.
@@ -596,7 +596,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * the socket is sending it. In other words, it's not safe to alter the data until after the delegate method
  * udpSocket:didSendDataWithTag: or udpSocket:didNotSendDataWithTag:dueToError: is invoked signifying
  * that this particular send operation has completed.
- * This is due to the fact that GCDAsyncUdpSocket does NOT copy the data.
+ * This is due to the fact that LYTGCDAsyncUdpSocket does NOT copy the data.
  * It simply retains it for performance reasons.
  * Often times, if NSMutableData is passed, it is because a request/response was built up in memory.
  * Copying this data adds an unwanted/unneeded overhead.
@@ -644,7 +644,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * the socket is sending it. In other words, it's not safe to alter the data until after the delegate method
  * udpSocket:didSendDataWithTag: or udpSocket:didNotSendDataWithTag:dueToError: is invoked signifying
  * that this particular send operation has completed.
- * This is due to the fact that GCDAsyncUdpSocket does NOT copy the data.
+ * This is due to the fact that LYTGCDAsyncUdpSocket does NOT copy the data.
  * It simply retains it for performance reasons.
  * Often times, if NSMutableData is passed, it is because a request/response was built up in memory.
  * Copying this data adds an unwanted/unneeded overhead.
@@ -669,13 +669,13 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  *    is more complicated than simple traffic shaping (e.g. simulating a cone port restricted router),
  *    or the system tools to handle this aren't available (e.g. on a mobile device).
  * 
- * For more information about GCDAsyncUdpSocketSendFilterBlock, see the documentation for its typedef.
+ * For more information about LYTGCDAsyncUdpSocketSendFilterBlock, see the documentation for its typedef.
  * To remove a previously set filter, invoke this method and pass a nil filterBlock and NULL filterQueue.
  * 
  * Note: This method invokes setSendFilter:withQueue:isAsynchronous: (documented below),
  *       passing YES for the isAsynchronous parameter.
 **/
-- (void)setSendFilter:(nullable GCDAsyncUdpSocketSendFilterBlock)filterBlock withQueue:(nullable dispatch_queue_t)filterQueue;
+- (void)setSendFilter:(nullable LYTGCDAsyncUdpSocketSendFilterBlock)filterBlock withQueue:(nullable dispatch_queue_t)filterQueue;
 
 /**
  * The receive filter can be run via dispatch_async or dispatch_sync.
@@ -690,7 +690,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * then you cannot perform any tasks which may invoke dispatch_sync on the socket queue.
  * For example, you can't query properties on the socket.
 **/
-- (void)setSendFilter:(nullable GCDAsyncUdpSocketSendFilterBlock)filterBlock
+- (void)setSendFilter:(nullable LYTGCDAsyncUdpSocketSendFilterBlock)filterBlock
             withQueue:(nullable dispatch_queue_t)filterQueue
        isAsynchronous:(BOOL)isAsynchronous;
 
@@ -753,9 +753,9 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * That is, it won't read any more packets from the underlying OS socket until beginReceiving is called again.
  * 
  * Important Note:
- * GCDAsyncUdpSocket may be running in parallel with your code.
+ * LYTGCDAsyncUdpSocket may be running in parallel with your code.
  * That is, your delegate is likely running on a separate thread/dispatch_queue.
- * When you invoke this method, GCDAsyncUdpSocket may have already dispatched delegate methods to be invoked.
+ * When you invoke this method, LYTGCDAsyncUdpSocket may have already dispatched delegate methods to be invoked.
  * Thus, if those delegate methods have already been dispatch_async'd,
  * your didReceive delegate method may still be invoked after this method has been called.
  * You should be aware of this, and program defensively.
@@ -792,7 +792,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * 
  * Example:
  * 
- * GCDAsyncUdpSocketReceiveFilterBlock filter = ^BOOL (NSData *data, NSData *address, id *context) {
+ * LYTGCDAsyncUdpSocketReceiveFilterBlock filter = ^BOOL (NSData *data, NSData *address, id *context) {
  * 
  *     MyProtocolMessage *msg = [MyProtocol parseMessage:data];
  *     
@@ -801,13 +801,13 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * };
  * [udpSocket setReceiveFilter:filter withQueue:myParsingQueue];
  * 
- * For more information about GCDAsyncUdpSocketReceiveFilterBlock, see the documentation for its typedef.
+ * For more information about LYTGCDAsyncUdpSocketReceiveFilterBlock, see the documentation for its typedef.
  * To remove a previously set filter, invoke this method and pass a nil filterBlock and NULL filterQueue.
  * 
  * Note: This method invokes setReceiveFilter:withQueue:isAsynchronous: (documented below),
  *       passing YES for the isAsynchronous parameter.
 **/
-- (void)setReceiveFilter:(nullable GCDAsyncUdpSocketReceiveFilterBlock)filterBlock withQueue:(nullable dispatch_queue_t)filterQueue;
+- (void)setReceiveFilter:(nullable LYTGCDAsyncUdpSocketReceiveFilterBlock)filterBlock withQueue:(nullable dispatch_queue_t)filterQueue;
 
 /**
  * The receive filter can be run via dispatch_async or dispatch_sync.
@@ -822,7 +822,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * then you cannot perform any tasks which may invoke dispatch_sync on the socket queue.
  * For example, you can't query properties on the socket.
 **/
-- (void)setReceiveFilter:(nullable GCDAsyncUdpSocketReceiveFilterBlock)filterBlock
+- (void)setReceiveFilter:(nullable LYTGCDAsyncUdpSocketReceiveFilterBlock)filterBlock
                withQueue:(nullable dispatch_queue_t)filterQueue
           isAsynchronous:(BOOL)isAsynchronous;
 
@@ -832,7 +832,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * Immediately closes the underlying socket.
  * Any pending send operations are discarded.
  * 
- * The GCDAsyncUdpSocket instance may optionally be used again.
+ * The LYTGCDAsyncUdpSocket instance may optionally be used again.
  *   (it will setup/configure/use another unnderlying BSD socket).
 **/
 - (void)close;
@@ -840,14 +840,14 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
 /**
  * Closes the underlying socket after all pending send operations have been sent.
  * 
- * The GCDAsyncUdpSocket instance may optionally be used again.
+ * The LYTGCDAsyncUdpSocket instance may optionally be used again.
  *   (it will setup/configure/use another unnderlying BSD socket).
 **/
 - (void)closeAfterSending;
 
 #pragma mark Advanced
 /**
- * GCDAsyncSocket maintains thread safety by using an internal serial dispatch_queue.
+ * LYTGCDAsyncSocket maintains thread safety by using an internal serial dispatch_queue.
  * In most cases, the instance creates this queue itself.
  * However, to allow for maximum flexibility, the internal queue may be passed in the init method.
  * This allows for some advanced options such as controlling socket priority via target queues.
@@ -880,7 +880,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * }
  *
  * What happens if you call this method from the socketTargetQueue? The result is deadlock.
- * This is because the GCD API offers no mechanism to discover a queue's targetQueue.
+ * This is because the LYTGCD API offers no mechanism to discover a queue's targetQueue.
  * Thus we have no idea if our socketQueue is configured with a targetQueue.
  * If we had this information, we could easily avoid deadlock.
  * But, since these API's are missing or unfeasible, you'll have to explicitly set it.
@@ -899,7 +899,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * Additionally, networking traffic from a single IP cannot monopolize the module.
  *
  * Here's how you would accomplish something like that:
- * - (dispatch_queue_t)newSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(GCDAsyncSocket *)sock
+ * - (dispatch_queue_t)newSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(LYTGCDAsyncSocket *)sock
  * {
  *     dispatch_queue_t socketQueue = dispatch_queue_create("", NULL);
  *     dispatch_queue_t ipQueue = [self ipQueueForAddress:address];
@@ -909,7 +909,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  *
  *     return socketQueue;
  * }
- * - (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket
+ * - (void)socket:(LYTGCDAsyncSocket *)sock didAcceptNewSocket:(LYTGCDAsyncSocket *)newSocket
  * {
  *     [clientConnections addObject:newSocket];
  *     [newSocket markSocketQueueTargetQueue:moduleQueue];
@@ -971,7 +971,7 @@ typedef BOOL (^GCDAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, 
  * 
  * Returns (creating if necessary) a CFReadStream/CFWriteStream for the internal socket.
  * 
- * Generally GCDAsyncUdpSocket doesn't use CFStream. (It uses the faster GCD API's.)
+ * Generally LYTGCDAsyncUdpSocket doesn't use CFStream. (It uses the faster LYTGCD API's.)
  * However, if you need one for any reason,
  * these methods are a convenient way to get access to a safe instance of one.
 **/

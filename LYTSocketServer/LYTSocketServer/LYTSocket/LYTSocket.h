@@ -14,6 +14,19 @@
 
 
 + (instancetype)sharedSocket;
-- (void)startConnectSocket;
 
+/**
+ 连接服务器
+
+ @param port 端口号
+ @param host 主机
+ */
+- (void)startConnectSocket:(uint16_t)port host:(NSString *)host;
+
+/**
+ 监听端口号
+
+ @param prot 端口号
+ */
+- (void)startAcceptOnPort:(uint16_t) prot;
 @end

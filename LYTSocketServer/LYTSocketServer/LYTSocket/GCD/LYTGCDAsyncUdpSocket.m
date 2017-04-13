@@ -1,5 +1,5 @@
 //  
-//  GCDAsyncUdpSocket
+//  LYTGCDAsyncUdpSocket
 //  
 //  This class is in the public domain.
 //  Originally created by Robbie Hanson of Deusty LLC.
@@ -8,7 +8,7 @@
 //  https://github.com/robbiehanson/CocoaAsyncSocket
 //
 
-#import "GCDAsyncUdpSocket.h"
+#import "LYTGCDAsyncUdpSocket.h"
 
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -33,7 +33,7 @@
 
 // Logging Enabled - See log level below
 
-// Logging uses the CocoaLumberjack framework (which is also GCD based).
+// Logging uses the CocoaLumberjack framework (which is also LYTGCD based).
 // http://code.google.com/p/cocoalumberjack/
 // 
 // It allows us to do a lot of logging without significantly slowing down the code.
@@ -100,15 +100,15 @@ static const int logLevel = LOG_LEVEL_VERBOSE;
 #define AutoreleasedBlock(block) ^{ @autoreleasepool { block(); }} 
 
 
-@class GCDAsyncUdpSendPacket;
+@class LYTGCDAsyncUdpSendPacket;
 
-NSString *const GCDAsyncUdpSocketException = @"GCDAsyncUdpSocketException";
-NSString *const GCDAsyncUdpSocketErrorDomain = @"GCDAsyncUdpSocketErrorDomain";
+NSString *const LYTGCDAsyncUdpSocketException = @"LYTGCDAsyncUdpSocketException";
+NSString *const LYTGCDAsyncUdpSocketErrorDomain = @"LYTGCDAsyncUdpSocketErrorDomain";
 
-NSString *const GCDAsyncUdpSocketQueueName = @"GCDAsyncUdpSocket";
-NSString *const GCDAsyncUdpSocketThreadName = @"GCDAsyncUdpSocket-CFStream";
+NSString *const LYTGCDAsyncUdpSocketQueueName = @"LYTGCDAsyncUdpSocket";
+NSString *const LYTGCDAsyncUdpSocketThreadName = @"LYTGCDAsyncUdpSocket-CFStream";
 
-enum GCDAsyncUdpSocketFlags
+enum LYTGCDAsyncUdpSocketFlags
 {
 	kDidCreateSockets        = 1 <<  0,  // If set, the sockets have been created.
 	kDidBind                 = 1 <<  1,  // If set, bind has been called.
@@ -132,7 +132,7 @@ enum GCDAsyncUdpSocketFlags
 #endif
 };
 
-enum GCDAsyncUdpSocketConfig
+enum LYTGCDAsyncUdpSocketConfig
 {
 	kIPv4Disabled  = 1 << 0,  // If set, IPv4 is disabled
 	kIPv6Disabled  = 1 << 1,  // If set, IPv6 is disabled
@@ -144,7 +144,7 @@ enum GCDAsyncUdpSocketConfig
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface GCDAsyncUdpSocket ()
+@interface LYTGCDAsyncUdpSocket ()
 {
 #if __has_feature(objc_arc_weak)
 	__weak id delegate;
@@ -153,11 +153,11 @@ enum GCDAsyncUdpSocketConfig
 #endif
 	dispatch_queue_t delegateQueue;
 	
-	GCDAsyncUdpSocketReceiveFilterBlock receiveFilterBlock;
+	LYTGCDAsyncUdpSocketReceiveFilterBlock receiveFilterBlock;
 	dispatch_queue_t receiveFilterQueue;
 	BOOL receiveFilterAsync;
 	
-	GCDAsyncUdpSocketSendFilterBlock sendFilterBlock;
+	LYTGCDAsyncUdpSocketSendFilterBlock sendFilterBlock;
 	dispatch_queue_t sendFilterQueue;
 	BOOL sendFilterAsync;
 	
@@ -180,7 +180,7 @@ enum GCDAsyncUdpSocketConfig
 	dispatch_source_t receive6Source;
 	dispatch_source_t sendTimer;
 	
-	GCDAsyncUdpSendPacket *currentSend;
+	LYTGCDAsyncUdpSendPacket *currentSend;
 	NSMutableArray *sendQueue;
 	
 	unsigned long socket4FDBytesAvailable;
@@ -263,9 +263,9 @@ enum GCDAsyncUdpSocketConfig
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * The GCDAsyncUdpSendPacket encompasses the instructions for a single send/write.
+ * The LYTGCDAsyncUdpSendPacket encompasses the instructions for a single send/write.
 **/
-@interface GCDAsyncUdpSendPacket : NSObject {
+@interface LYTGCDAsyncUdpSendPacket : NSObject {
 @public
 	NSData *buffer;
 	NSTimeInterval timeout;
@@ -285,7 +285,7 @@ enum GCDAsyncUdpSocketConfig
 
 @end
 
-@implementation GCDAsyncUdpSendPacket
+@implementation LYTGCDAsyncUdpSendPacket
 
 - (id)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i
 {
@@ -307,7 +307,7 @@ enum GCDAsyncUdpSocketConfig
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface GCDAsyncUdpSpecialPacket : NSObject {
+@interface LYTGCDAsyncUdpSpecialPacket : NSObject {
 @public
 //	uint8_t type;
 	
@@ -321,7 +321,7 @@ enum GCDAsyncUdpSocketConfig
 
 @end
 
-@implementation GCDAsyncUdpSpecialPacket
+@implementation LYTGCDAsyncUdpSpecialPacket
 
 - (id)init
 {
@@ -336,7 +336,7 @@ enum GCDAsyncUdpSocketConfig
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation GCDAsyncUdpSocket
+@implementation LYTGCDAsyncUdpSocket
 
 - (id)init
 {
@@ -352,14 +352,14 @@ enum GCDAsyncUdpSocketConfig
 	return [self initWithDelegate:nil delegateQueue:NULL socketQueue:sq];
 }
 
-- (id)initWithDelegate:(id <GCDAsyncUdpSocketDelegate>)aDelegate delegateQueue:(dispatch_queue_t)dq
+- (id)initWithDelegate:(id <LYTGCDAsyncUdpSocketDelegate>)aDelegate delegateQueue:(dispatch_queue_t)dq
 {
 	LogTrace();
 	
 	return [self initWithDelegate:aDelegate delegateQueue:dq socketQueue:NULL];
 }
 
-- (id)initWithDelegate:(id <GCDAsyncUdpSocketDelegate>)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
+- (id)initWithDelegate:(id <LYTGCDAsyncUdpSocketDelegate>)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
 {
 	LogTrace();
 	
@@ -399,7 +399,7 @@ enum GCDAsyncUdpSocketConfig
 		}
 		else
 		{
-			socketQueue = dispatch_queue_create([GCDAsyncUdpSocketQueueName UTF8String], NULL);
+			socketQueue = dispatch_queue_create([LYTGCDAsyncUdpSocketQueueName UTF8String], NULL);
 		}
 
 		// The dispatch_queue_set_specific() and dispatch_get_specific() functions take a "void *key" parameter.
@@ -492,7 +492,7 @@ enum GCDAsyncUdpSocketConfig
 	}
 }
 
-- (void)setDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate synchronously:(BOOL)synchronously
+- (void)setDelegate:(id <LYTGCDAsyncUdpSocketDelegate>)newDelegate synchronously:(BOOL)synchronously
 {
 	dispatch_block_t block = ^{
 		delegate = newDelegate;
@@ -509,12 +509,12 @@ enum GCDAsyncUdpSocketConfig
 	}
 }
 
-- (void)setDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate
+- (void)setDelegate:(id <LYTGCDAsyncUdpSocketDelegate>)newDelegate
 {
 	[self setDelegate:newDelegate synchronously:NO];
 }
 
-- (void)synchronouslySetDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate
+- (void)synchronouslySetDelegate:(id <LYTGCDAsyncUdpSocketDelegate>)newDelegate
 {
 	[self setDelegate:newDelegate synchronously:YES];
 }
@@ -570,7 +570,7 @@ enum GCDAsyncUdpSocketConfig
 	[self setDelegateQueue:newDelegateQueue synchronously:YES];
 }
 
-- (void)getDelegate:(id <GCDAsyncUdpSocketDelegate> *)delegatePtr delegateQueue:(dispatch_queue_t *)delegateQueuePtr
+- (void)getDelegate:(id <LYTGCDAsyncUdpSocketDelegate> *)delegatePtr delegateQueue:(dispatch_queue_t *)delegateQueuePtr
 {
 	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
@@ -592,7 +592,7 @@ enum GCDAsyncUdpSocketConfig
 	}
 }
 
-- (void)setDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue synchronously:(BOOL)synchronously
+- (void)setDelegate:(id <LYTGCDAsyncUdpSocketDelegate>)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue synchronously:(BOOL)synchronously
 {
 	dispatch_block_t block = ^{
 		
@@ -617,12 +617,12 @@ enum GCDAsyncUdpSocketConfig
 	}
 }
 
-- (void)setDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue
+- (void)setDelegate:(id <LYTGCDAsyncUdpSocketDelegate>)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue
 {
 	[self setDelegate:newDelegate delegateQueue:newDelegateQueue synchronously:NO];
 }
 
-- (void)synchronouslySetDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue
+- (void)synchronouslySetDelegate:(id <LYTGCDAsyncUdpSocketDelegate>)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue
 {
 	[self setDelegate:newDelegate delegateQueue:newDelegateQueue synchronously:YES];
 }
@@ -1033,8 +1033,8 @@ enum GCDAsyncUdpSocketConfig
 {
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
 	
-	return [NSError errorWithDomain:GCDAsyncUdpSocketErrorDomain
-	                           code:GCDAsyncUdpSocketBadConfigError
+	return [NSError errorWithDomain:LYTGCDAsyncUdpSocketErrorDomain
+	                           code:LYTGCDAsyncUdpSocketBadConfigError
 	                       userInfo:userInfo];
 }
 
@@ -1042,8 +1042,8 @@ enum GCDAsyncUdpSocketConfig
 {
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
 	
-	return [NSError errorWithDomain:GCDAsyncUdpSocketErrorDomain
-	                           code:GCDAsyncUdpSocketBadParamError
+	return [NSError errorWithDomain:LYTGCDAsyncUdpSocketErrorDomain
+	                           code:LYTGCDAsyncUdpSocketBadParamError
 	                       userInfo:userInfo];
 }
 
@@ -1079,34 +1079,34 @@ enum GCDAsyncUdpSocketConfig
 **/
 - (NSError *)sendTimeoutError
 {
-	NSString *errMsg = NSLocalizedStringWithDefaultValue(@"GCDAsyncUdpSocketSendTimeoutError",
-	                                                     @"GCDAsyncUdpSocket", [NSBundle mainBundle],
+	NSString *errMsg = NSLocalizedStringWithDefaultValue(@"LYTGCDAsyncUdpSocketSendTimeoutError",
+	                                                     @"LYTGCDAsyncUdpSocket", [NSBundle mainBundle],
 	                                                     @"Send operation timed out", nil);
 	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
 	
-	return [NSError errorWithDomain:GCDAsyncUdpSocketErrorDomain
-	                           code:GCDAsyncUdpSocketSendTimeoutError
+	return [NSError errorWithDomain:LYTGCDAsyncUdpSocketErrorDomain
+	                           code:LYTGCDAsyncUdpSocketSendTimeoutError
 	                       userInfo:userInfo];
 }
 
 - (NSError *)socketClosedError
 {
-	NSString *errMsg = NSLocalizedStringWithDefaultValue(@"GCDAsyncUdpSocketClosedError",
-	                                                     @"GCDAsyncUdpSocket", [NSBundle mainBundle],
+	NSString *errMsg = NSLocalizedStringWithDefaultValue(@"LYTGCDAsyncUdpSocketClosedError",
+	                                                     @"LYTGCDAsyncUdpSocket", [NSBundle mainBundle],
 	                                                     @"Socket closed", nil);
 	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
 	
-	return [NSError errorWithDomain:GCDAsyncUdpSocketErrorDomain code:GCDAsyncUdpSocketClosedError userInfo:userInfo];
+	return [NSError errorWithDomain:LYTGCDAsyncUdpSocketErrorDomain code:LYTGCDAsyncUdpSocketClosedError userInfo:userInfo];
 }
 
 - (NSError *)otherError:(NSString *)errMsg
 {
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
 	
-	return [NSError errorWithDomain:GCDAsyncUdpSocketErrorDomain
-	                           code:GCDAsyncUdpSocketOtherError
+	return [NSError errorWithDomain:LYTGCDAsyncUdpSocketErrorDomain
+	                           code:LYTGCDAsyncUdpSocketOtherError
 	                       userInfo:userInfo];
 }
 
@@ -2027,8 +2027,8 @@ enum GCDAsyncUdpSocketConfig
          *
          * The default maximum size of the UDP buffer in iOS is 9216 bytes.
          *
-         * This is the reason of #222(GCD does not necessarily return the size of an entire UDP packet) and
-         *  #535(GCDAsyncUDPSocket can not send data when data is greater than 9K)
+         * This is the reason of #222(LYTGCD does not necessarily return the size of an entire UDP packet) and
+         *  #535(LYTGCDAsyncUDPSocket can not send data when data is greater than 9K)
          *
          *
          * Enlarge the maximum size of UDP packet.
@@ -3138,7 +3138,7 @@ enum GCDAsyncUdpSocketConfig
 		
 		// Create special connect packet
 		
-		GCDAsyncUdpSpecialPacket *packet = [[GCDAsyncUdpSpecialPacket alloc] init];
+		LYTGCDAsyncUdpSpecialPacket *packet = [[LYTGCDAsyncUdpSpecialPacket alloc] init];
 		packet->resolveInProgress = YES;
 		
 		// Start asynchronous DNS resolve for host:port on background queue
@@ -3223,7 +3223,7 @@ enum GCDAsyncUdpSocketConfig
 		NSData *address = [remoteAddr copy];
 		NSArray *addresses = [NSArray arrayWithObject:address];
 		
-		GCDAsyncUdpSpecialPacket *packet = [[GCDAsyncUdpSpecialPacket alloc] init];
+		LYTGCDAsyncUdpSpecialPacket *packet = [[LYTGCDAsyncUdpSpecialPacket alloc] init];
 		packet->addresses = addresses;
 		
 		// Updates flags, add connect packet to send queue, and pump send queue
@@ -3256,11 +3256,11 @@ enum GCDAsyncUdpSocketConfig
 	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	
-	BOOL sendQueueReady = [currentSend isKindOfClass:[GCDAsyncUdpSpecialPacket class]];
+	BOOL sendQueueReady = [currentSend isKindOfClass:[LYTGCDAsyncUdpSpecialPacket class]];
 	
 	if (sendQueueReady)
 	{
-		GCDAsyncUdpSpecialPacket *connectPacket = (GCDAsyncUdpSpecialPacket *)currentSend;
+		LYTGCDAsyncUdpSpecialPacket *connectPacket = (LYTGCDAsyncUdpSpecialPacket *)currentSend;
 		
 		if (connectPacket->resolveInProgress)
 		{
@@ -3663,7 +3663,7 @@ enum GCDAsyncUdpSocketConfig
     
     
 	
-	GCDAsyncUdpSendPacket *packet = [[GCDAsyncUdpSendPacket alloc] initWithData:data timeout:timeout tag:tag];
+	LYTGCDAsyncUdpSendPacket *packet = [[LYTGCDAsyncUdpSendPacket alloc] initWithData:data timeout:timeout tag:tag];
 	
 	dispatch_async(socketQueue, ^{ @autoreleasepool {
 		
@@ -3687,7 +3687,7 @@ enum GCDAsyncUdpSocketConfig
 		return;
 	}
 	
-	GCDAsyncUdpSendPacket *packet = [[GCDAsyncUdpSendPacket alloc] initWithData:data timeout:timeout tag:tag];
+	LYTGCDAsyncUdpSendPacket *packet = [[LYTGCDAsyncUdpSendPacket alloc] initWithData:data timeout:timeout tag:tag];
 	packet->resolveInProgress = YES;
 	
 	[self asyncResolveHost:host port:port withCompletionBlock:^(NSArray *addresses, NSError *error) {
@@ -3727,8 +3727,8 @@ enum GCDAsyncUdpSocketConfig
 		return;
 	}
 	
-	GCDAsyncUdpSendPacket *packet = [[GCDAsyncUdpSendPacket alloc] initWithData:data timeout:timeout tag:tag];
-	packet->addressFamily = [GCDAsyncUdpSocket familyFromAddress:remoteAddr];
+	LYTGCDAsyncUdpSendPacket *packet = [[LYTGCDAsyncUdpSendPacket alloc] initWithData:data timeout:timeout tag:tag];
+	packet->addressFamily = [LYTGCDAsyncUdpSocket familyFromAddress:remoteAddr];
 	packet->address = remoteAddr;
 	
 	dispatch_async(socketQueue, ^{ @autoreleasepool {
@@ -3738,16 +3738,16 @@ enum GCDAsyncUdpSocketConfig
 	}});
 }
 
-- (void)setSendFilter:(GCDAsyncUdpSocketSendFilterBlock)filterBlock withQueue:(dispatch_queue_t)filterQueue
+- (void)setSendFilter:(LYTGCDAsyncUdpSocketSendFilterBlock)filterBlock withQueue:(dispatch_queue_t)filterQueue
 {
 	[self setSendFilter:filterBlock withQueue:filterQueue isAsynchronous:YES];
 }
 
-- (void)setSendFilter:(GCDAsyncUdpSocketSendFilterBlock)filterBlock
+- (void)setSendFilter:(LYTGCDAsyncUdpSocketSendFilterBlock)filterBlock
             withQueue:(dispatch_queue_t)filterQueue
        isAsynchronous:(BOOL)isAsynchronous
 {
-	GCDAsyncUdpSocketSendFilterBlock newFilterBlock = NULL;
+	LYTGCDAsyncUdpSocketSendFilterBlock newFilterBlock = NULL;
 	dispatch_queue_t newFilterQueue = NULL;
 	
 	if (filterBlock)
@@ -3803,7 +3803,7 @@ enum GCDAsyncUdpSocketConfig
 			currentSend = [sendQueue objectAtIndex:0];
 			[sendQueue removeObjectAtIndex:0];
 			
-			if ([currentSend isKindOfClass:[GCDAsyncUdpSpecialPacket class]])
+			if ([currentSend isKindOfClass:[LYTGCDAsyncUdpSpecialPacket class]])
 			{
 				[self maybeConnect];
 				
@@ -3944,7 +3944,7 @@ enum GCDAsyncUdpSocketConfig
 			// Scenario 1 of 3 - Need to asynchronously query sendFilter
 			
 			currentSend->filterInProgress = YES;
-			GCDAsyncUdpSendPacket *sendPacket = currentSend;
+			LYTGCDAsyncUdpSendPacket *sendPacket = currentSend;
 			
 			dispatch_async(sendFilterQueue, ^{ @autoreleasepool {
 				
@@ -4293,16 +4293,16 @@ enum GCDAsyncUdpSocketConfig
 		dispatch_async(socketQueue, block);
 }
 
-- (void)setReceiveFilter:(GCDAsyncUdpSocketReceiveFilterBlock)filterBlock withQueue:(dispatch_queue_t)filterQueue
+- (void)setReceiveFilter:(LYTGCDAsyncUdpSocketReceiveFilterBlock)filterBlock withQueue:(dispatch_queue_t)filterQueue
 {
 	[self setReceiveFilter:filterBlock withQueue:filterQueue isAsynchronous:YES];
 }
 
-- (void)setReceiveFilter:(GCDAsyncUdpSocketReceiveFilterBlock)filterBlock
+- (void)setReceiveFilter:(LYTGCDAsyncUdpSocketReceiveFilterBlock)filterBlock
                withQueue:(dispatch_queue_t)filterQueue
           isAsynchronous:(BOOL)isAsynchronous
 {
-	GCDAsyncUdpSocketReceiveFilterBlock newFilterBlock = NULL;
+	LYTGCDAsyncUdpSocketReceiveFilterBlock newFilterBlock = NULL;
 	dispatch_queue_t newFilterQueue = NULL;
 	
 	if (filterBlock)
@@ -4430,7 +4430,7 @@ enum GCDAsyncUdpSocketConfig
 		struct sockaddr_in sockaddr4;
 		socklen_t sockaddr4len = sizeof(sockaddr4);
 		
-		// #222: GCD does not necessarily return the size of an entire UDP packet 
+		// #222: LYTGCD does not necessarily return the size of an entire UDP packet 
 		// from dispatch_source_get_data(), so we must use the maximum packet size.
 		size_t bufSize = max4ReceiveSize;
 		void *buf = malloc(bufSize);
@@ -4467,7 +4467,7 @@ enum GCDAsyncUdpSocketConfig
 		struct sockaddr_in6 sockaddr6;
 		socklen_t sockaddr6len = sizeof(sockaddr6);
 		
-		// #222: GCD does not necessarily return the size of an entire UDP packet 
+		// #222: LYTGCD does not necessarily return the size of an entire UDP packet 
 		// from dispatch_source_get_data(), so we must use the maximum packet size.
 		size_t bufSize = max6ReceiveSize;
 		void *buf = malloc(bufSize);
@@ -4748,7 +4748,7 @@ static NSThread *listenerThread;
 {
 	@autoreleasepool {
 	
-		[[NSThread currentThread] setName:GCDAsyncUdpSocketThreadName];
+		[[NSThread currentThread] setName:LYTGCDAsyncUdpSocketThreadName];
 		
 		LogInfo(@"ListenerThread: Started");
 		
@@ -4766,7 +4766,7 @@ static NSThread *listenerThread;
 	}
 }
 
-+ (void)addStreamListener:(GCDAsyncUdpSocket *)asyncUdpSocket
++ (void)addStreamListener:(LYTGCDAsyncUdpSocket *)asyncUdpSocket
 {
 	LogTrace();
 	NSAssert([NSThread currentThread] == listenerThread, @"Invoked on wrong thread");
@@ -4786,7 +4786,7 @@ static NSThread *listenerThread;
 		CFWriteStreamScheduleWithRunLoop(asyncUdpSocket->writeStream6, runLoop, kCFRunLoopDefaultMode);
 }
 
-+ (void)removeStreamListener:(GCDAsyncUdpSocket *)asyncUdpSocket
++ (void)removeStreamListener:(LYTGCDAsyncUdpSocket *)asyncUdpSocket
 {
 	LogTrace();
 	NSAssert([NSThread currentThread] == listenerThread, @"Invoked on wrong thread");
@@ -4809,7 +4809,7 @@ static NSThread *listenerThread;
 static void CFReadStreamCallback(CFReadStreamRef stream, CFStreamEventType type, void *pInfo)
 {
 	@autoreleasepool {
-		GCDAsyncUdpSocket *asyncUdpSocket = (__bridge GCDAsyncUdpSocket *)pInfo;
+		LYTGCDAsyncUdpSocket *asyncUdpSocket = (__bridge LYTGCDAsyncUdpSocket *)pInfo;
 	
 		switch(type)
 		{
@@ -4861,7 +4861,7 @@ static void CFReadStreamCallback(CFReadStreamRef stream, CFStreamEventType type,
 static void CFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType type, void *pInfo)
 {
 	@autoreleasepool {
-		GCDAsyncUdpSocket *asyncUdpSocket = (__bridge GCDAsyncUdpSocket *)pInfo;
+		LYTGCDAsyncUdpSocket *asyncUdpSocket = (__bridge LYTGCDAsyncUdpSocket *)pInfo;
 		
 		switch(type)
 		{

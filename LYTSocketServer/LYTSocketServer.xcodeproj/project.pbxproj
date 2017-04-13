@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DE0DC51D1E9F19EE0041011E /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0DC5181E9F19EE0041011E /* GCDAsyncSocket.m */; };
-		DE0DC51E1E9F19EE0041011E /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0DC51A1E9F19EE0041011E /* GCDAsyncUdpSocket.m */; };
+		DE0DC51D1E9F19EE0041011E /* LYTGCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0DC5181E9F19EE0041011E /* LYTGCDAsyncSocket.m */; };
+		DE0DC51E1E9F19EE0041011E /* LYTGCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0DC51A1E9F19EE0041011E /* LYTGCDAsyncUdpSocket.m */; };
 		DE0DC51F1E9F19EE0041011E /* LYTSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0DC51C1E9F19EE0041011E /* LYTSocket.m */; };
 		DE5979BA1E9F146A008789FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DE5979B91E9F146A008789FA /* main.m */; };
 		DE5979BD1E9F146A008789FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DE5979BC1E9F146A008789FA /* AppDelegate.m */; };
@@ -38,11 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DE0DC5151E9F19EE0041011E /* CocoaAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaAsyncSocket.h; sourceTree = "<group>"; };
-		DE0DC5171E9F19EE0041011E /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
-		DE0DC5181E9F19EE0041011E /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
-		DE0DC5191E9F19EE0041011E /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
-		DE0DC51A1E9F19EE0041011E /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		DE0DC5151E9F19EE0041011E /* LYTCocoaAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYTCocoaAsyncSocket.h; sourceTree = "<group>"; };
+		DE0DC5171E9F19EE0041011E /* LYTGCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYTGCDAsyncSocket.h; sourceTree = "<group>"; };
+		DE0DC5181E9F19EE0041011E /* LYTGCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYTGCDAsyncSocket.m; sourceTree = "<group>"; };
+		DE0DC5191E9F19EE0041011E /* LYTGCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYTGCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		DE0DC51A1E9F19EE0041011E /* LYTGCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYTGCDAsyncUdpSocket.m; sourceTree = "<group>"; };
 		DE0DC51B1E9F19EE0041011E /* LYTSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYTSocket.h; sourceTree = "<group>"; };
 		DE0DC51C1E9F19EE0041011E /* LYTSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYTSocket.m; sourceTree = "<group>"; };
 		DE5979B51E9F146A008789FA /* LYTSocketServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LYTSocketServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,7 +91,7 @@
 		DE0DC5141E9F19EE0041011E /* LYTSocket */ = {
 			isa = PBXGroup;
 			children = (
-				DE0DC5151E9F19EE0041011E /* CocoaAsyncSocket.h */,
+				DE0DC5151E9F19EE0041011E /* LYTCocoaAsyncSocket.h */,
 				DE0DC5161E9F19EE0041011E /* GCD */,
 				DE0DC51B1E9F19EE0041011E /* LYTSocket.h */,
 				DE0DC51C1E9F19EE0041011E /* LYTSocket.m */,
@@ -102,10 +102,10 @@
 		DE0DC5161E9F19EE0041011E /* GCD */ = {
 			isa = PBXGroup;
 			children = (
-				DE0DC5171E9F19EE0041011E /* GCDAsyncSocket.h */,
-				DE0DC5181E9F19EE0041011E /* GCDAsyncSocket.m */,
-				DE0DC5191E9F19EE0041011E /* GCDAsyncUdpSocket.h */,
-				DE0DC51A1E9F19EE0041011E /* GCDAsyncUdpSocket.m */,
+				DE0DC5171E9F19EE0041011E /* LYTGCDAsyncSocket.h */,
+				DE0DC5181E9F19EE0041011E /* LYTGCDAsyncSocket.m */,
+				DE0DC5191E9F19EE0041011E /* LYTGCDAsyncUdpSocket.h */,
+				DE0DC51A1E9F19EE0041011E /* LYTGCDAsyncUdpSocket.m */,
 			);
 			path = GCD;
 			sourceTree = "<group>";
@@ -309,8 +309,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE0DC51D1E9F19EE0041011E /* GCDAsyncSocket.m in Sources */,
-				DE0DC51E1E9F19EE0041011E /* GCDAsyncUdpSocket.m in Sources */,
+				DE0DC51D1E9F19EE0041011E /* LYTGCDAsyncSocket.m in Sources */,
+				DE0DC51E1E9F19EE0041011E /* LYTGCDAsyncUdpSocket.m in Sources */,
 				DE5979C01E9F146A008789FA /* ViewController.m in Sources */,
 				DE5979BD1E9F146A008789FA /* AppDelegate.m in Sources */,
 				DE0DC51F1E9F19EE0041011E /* LYTSocket.m in Sources */,
